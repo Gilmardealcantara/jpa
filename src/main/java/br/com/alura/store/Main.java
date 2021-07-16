@@ -1,10 +1,10 @@
-package br.com.alura.store.main;
+package br.com.alura.store;
 
+import br.com.alura.store.dao.ProductDao;
 import br.com.alura.store.model.Product;
+import br.com.alura.store.utils.JPAUtil;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.math.BigDecimal;
 
 public class Main {
@@ -14,11 +14,12 @@ public class Main {
         product.setDescription("Top");
         product.setPrice(new BigDecimal("800"));
 
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("store");
-        EntityManager em = factory.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
+
+        ProductDao productDao = new ProductDao(em);
 
         em.getTransaction().begin();
-        em.persist(product);
+        productDao.create(product);
         em.getTransaction().commit();
         em.close();
     }
