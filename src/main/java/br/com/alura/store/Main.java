@@ -1,9 +1,10 @@
 package br.com.alura.store;
 
 import br.com.alura.store.dao.CategoryDao;
+import br.com.alura.store.dao.ClientDao;
+import br.com.alura.store.dao.OrderDao;
 import br.com.alura.store.dao.ProductDao;
-import br.com.alura.store.model.Category;
-import br.com.alura.store.model.Product;
+import br.com.alura.store.model.*;
 import br.com.alura.store.utils.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -11,7 +12,23 @@ import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
-        testQueries();
+        createProduct();
+        EntityManager em = JPAUtil.getEntityManager();
+        ProductDao productDao = new ProductDao(em);
+        Product product = productDao.getById(1L);
+
+        em.getTransaction().begin();
+        ClientDao clientDao = new ClientDao(em);
+        Client client = new Client("Gilmar", "1234");
+        clientDao.create(client);
+
+        OrderDao orderDao = new OrderDao(em);
+        Order order = new Order(client);
+        order.addItem(new OrderItem(10, order, product));
+        orderDao.create(order);
+
+        em.getTransaction().commit();
+        em.close();
     }
 
     private static void testQueries() {
