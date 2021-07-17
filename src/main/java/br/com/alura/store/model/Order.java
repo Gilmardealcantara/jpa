@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "orders")
@@ -12,14 +13,14 @@ public class Order {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "total_value")
-    private BigDecimal totalValue;
+    private BigDecimal totalValue = BigDecimal.ZERO;
     private LocalDate date = LocalDate.now();
 
     @ManyToOne
     private Client client;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> itens = new ArrayList<>();
+    private List<OrderItem> items = new ArrayList<>();
 
     public Order(Client client) {
         this.client = client;
@@ -30,7 +31,12 @@ public class Order {
 
     public void addItem(OrderItem item){
         item.setOrder(this);
-        this.itens.add(item);
+        this.items.add(item);
+        this.totalValue = this.totalValue.add(item.getValue());
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
     }
 
     public Client getClient() {

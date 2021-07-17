@@ -27,6 +27,10 @@ public class OrderItem {
 
     }
 
+    public BigDecimal getValue() {
+        return this.unitPrice.multiply(new BigDecimal(this.qnt));
+    }
+
     public Long getId() {
         return id;
     }

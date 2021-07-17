@@ -9,9 +9,18 @@ import br.com.alura.store.utils.JPAUtil;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
+        createOrder();
+        EntityManager em = JPAUtil.getEntityManager();
+        OrderDao orderDao = new OrderDao(em);
+
+        System.out.println("TOTAL VALUE: " + orderDao.soldTotalValue());;
+    }
+
+    private static void createOrder(){
         createProduct();
         EntityManager em = JPAUtil.getEntityManager();
         ProductDao productDao = new ProductDao(em);
@@ -25,6 +34,7 @@ public class Main {
         OrderDao orderDao = new OrderDao(em);
         Order order = new Order(client);
         order.addItem(new OrderItem(10, order, product));
+
         orderDao.create(order);
 
         em.getTransaction().commit();
