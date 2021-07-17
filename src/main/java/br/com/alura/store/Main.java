@@ -1,6 +1,7 @@
 package br.com.alura.store;
 
 import br.com.alura.store.dao.ProductDao;
+import br.com.alura.store.model.Category;
 import br.com.alura.store.model.Product;
 import br.com.alura.store.utils.JPAUtil;
 
@@ -9,10 +10,7 @@ import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
-        Product product = new Product();
-        product.setName("Xiome Redmin");
-        product.setDescription("Top");
-        product.setPrice(new BigDecimal("800"));
+        Product product = new Product("Xiome Redmin", "Top", new BigDecimal("800"), Category.CELLPHONES);
 
         EntityManager em = JPAUtil.getEntityManager();
 
