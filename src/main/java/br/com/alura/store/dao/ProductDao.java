@@ -40,6 +40,12 @@ public class ProductDao {
                 .getResultList();
     }
 
+    public List<Product> getByCategoryNamedQuery(String name) {
+        return em.createNamedQuery("Product.getByCategoryName", Product.class)
+                .setParameter("name", name)
+                .getResultList();
+    }
+
     public BigDecimal getProductPriceByName (String name) {
         String jpql = "SELECT p.price FROM Product p WHERE p.name = :name";
         return em.createQuery(jpql, BigDecimal.class)

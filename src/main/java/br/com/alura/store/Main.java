@@ -12,6 +12,10 @@ import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
+        testQueries();
+    }
+
+    private void testOrderQueries() {
         createOrder();
         EntityManager em = JPAUtil.getEntityManager();
         OrderDao orderDao = new OrderDao(em);
@@ -65,6 +69,7 @@ public class Main {
         productDao.getAll().forEach(v -> System.out.println(v.getName()));
         productDao.getByName("Xiome Redmin").forEach(v -> System.out.println(v.getCategory().getName()));
         productDao.getByCategoryName("cellphone").forEach(v -> System.out.println(v.getName()));
+        productDao.getByCategoryNamedQuery("cellphone").forEach(v -> System.out.println(v.getName()));
         System.out.println("product price: " + productDao.getProductPriceByName("Xiome Redmin"));
 
     }
