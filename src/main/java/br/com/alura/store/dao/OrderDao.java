@@ -30,7 +30,7 @@ public class OrderDao {
         String jpql = "SELECT new br.com.alura.store.model.vo.SalesReportVo(product.name, SUM(item.qnt), MAX(o.date)) FROM Order o "
                 + "JOIN o.items item "
                 + "JOIN item.product product "
-                +  "GROUP BY product.name "
+                + "GROUP BY product.name "
                 + "ORDER BY item.qnt DESC";
 
         return em.createQuery(jpql, SalesReportVo.class)
@@ -41,10 +41,16 @@ public class OrderDao {
         String jpql = "SELECT product.name, SUM(item.qnt), MAX(o.date) FROM Order o "
                 + "JOIN o.items item "
                 + "JOIN item.product product "
-                +  "GROUP BY product.name "
+                + "GROUP BY product.name "
                 + "ORDER BY item.qnt DESC";
 
         return em.createQuery(jpql, Object[].class)
                 .getResultList();
+    }
+
+    public Order getWithClient(Long id) {
+        return em.createQuery("SELECT o FROM Order o JOIN FETCH o.client WHERE o.id = :id", Order.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

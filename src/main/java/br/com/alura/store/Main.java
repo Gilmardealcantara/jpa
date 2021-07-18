@@ -22,6 +22,8 @@ public class Main {
         Order order = em.find(Order.class, 1L);
         System.out.println(order.getItems().size());
         order.getItems().forEach(x -> System.out.println(x.getProduct()));
+        Order orderWithClient = orderDao.getWithClient(1L);
+        System.out.println(orderWithClient.getClient().getName());
     }
 
     private static void testOrderQueries() {
