@@ -16,7 +16,7 @@ public class Order {
     private BigDecimal totalValue = BigDecimal.ZERO;
     private LocalDate date = LocalDate.now();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

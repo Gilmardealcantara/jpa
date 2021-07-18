@@ -12,10 +12,19 @@ import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
-        testQueries();
+        testQueriesPerformance();
     }
 
-    private void testOrderQueries() {
+    private static void testQueriesPerformance() {
+        createOrder();
+        EntityManager em = JPAUtil.getEntityManager();
+        OrderDao orderDao = new OrderDao(em);
+        Order order = em.find(Order.class, 1L);
+        System.out.println(order.getItems().size());
+        order.getItems().forEach(x -> System.out.println(x.getProduct()));
+    }
+
+    private static void testOrderQueries() {
         createOrder();
         EntityManager em = JPAUtil.getEntityManager();
         OrderDao orderDao = new OrderDao(em);
