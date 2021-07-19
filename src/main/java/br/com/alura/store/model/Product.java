@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "products")
-@NamedQuery(name = "Product.getByCategoryName", query = "SELECT p FROM Product p WHERE p.category.name = :name")
+@NamedQuery(name = "Product.getByCategoryName", query = "SELECT p FROM Product p WHERE p.category.id.name = :name")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Product {
     @Id
