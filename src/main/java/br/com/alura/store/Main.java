@@ -12,7 +12,20 @@ import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
-        testQueriesPerformance();
+
+        testProductDynamicFilters();
+    }
+
+    private static void testProductDynamicFilters() {
+        createProduct();
+        EntityManager em = JPAUtil.getEntityManager();
+        ProductDao productDao = new ProductDao(em);
+        productDao.findByParameters("Xiome Redmin", null, null);
+        productDao.findByParameters("Xiome Redmin", new BigDecimal("800"), null);
+        productDao.findByParameters(null, new BigDecimal("800"), null);
+        productDao.findByParametersWithCriteria("Xiome Redmin", new BigDecimal("800"), null);
+        productDao.findByParametersWithCriteria(null, new BigDecimal("800"), null);
+        productDao.findByParametersWithCriteria("Xiome Redmin", null, null);
     }
 
     private static void testQueriesPerformance() {
