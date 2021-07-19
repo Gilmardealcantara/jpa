@@ -8,23 +8,19 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String cpf;
+
+    @Embedded
+    private PersonalData personalData;
 
     public Client(String name, String cpf) {
-        this.name = name;
-        this.cpf = cpf;
+        personalData = new PersonalData(name, cpf);
     }
 
     public Client() {
     }
 
     public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        return personalData.getName();
     }
 
     public void setId(Long id) {
