@@ -1,9 +1,11 @@
 package br.com.alura.store.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "books")
 public class Book extends Product {
     private String author;
     private String numberOfPages;
